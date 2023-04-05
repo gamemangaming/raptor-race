@@ -330,7 +330,7 @@ shape = SubResource("RectangleShape2D_f0ccb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_86jpy")
 animation = &"run"
-frame_progress = 0.544992
+frame_progress = 0.297255
 
 [node name="jumpSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_0c1ev")

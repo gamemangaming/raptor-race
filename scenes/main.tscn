@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://sbo1oqvaoiip"]
+[gd_scene load_steps=5 format=3 uid="uid://sbo1oqvaoiip"]
 
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_jfeef"]
 [ext_resource type="Texture2D" uid="uid://dyom4em6nbp56" path="res://assets/sprites/Background/background_static.png" id="1_otpwb"]
 [ext_resource type="PackedScene" uid="uid://bjeindvxx7oxw" path="res://scenes/platform.tscn" id="2_1gtdi"]
 [ext_resource type="PackedScene" uid="uid://cop00gyepsxud" path="res://scenes/player.tscn" id="3_cswyl"]
 
 [node name="World" type="Node2D" groups=["example"]]
+script = ExtResource("1_jfeef")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
