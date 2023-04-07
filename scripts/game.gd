@@ -1,13 +1,22 @@
 extends Node2D
 
 @export var world_speed = 300
+@export var collectible_pitch_reset_interval = 2000
 
 @onready var moving_environment = $"/root/World/Environment/Moving"
+@onready var collect_sound = $"/root/World/Sounds/CollectSound"
+@onready var score_label = $"/root/World/HUD/UI/Score"
 
 var platform = preload("res://scenes/platform.tscn")
+var platform_collectible_single = preload("res://scenes/platform_collectible_single.tscn")
+var platform_collectible_multiple = preload("res://scenes/platform_collectible_multiple.tscn")
+var platform_collectible_rainbow = preload("res://scenes/platform_collectible_rainbow.tscn")
 var rng = RandomNumberGenerator.new()
 var last_platform_position = Vector2.ZERO
 var next_spawn_time = 0
+var score = 0
+var collectible_pitch = 1.0
+var reset_collectible_pitch_time = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,12 +24,26 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# Reset the collectible sound pitch after a time
+	if Time.get_ticks_msec() > reset_collectible_pitch_time:
+		collectible_pitch = 1.0
+	
 	# Spawn a new platform
 	if Time.get_ticks_msec() > next_spawn_time:
 		_spawn_new_platform()
+	
+	# Print the score count to the score label
+	score_label.text = "Score: %s" % score
 		
 func _spawn_new_platform():
-	var new_platform = platform.instantiate()
+	var available_platforms = [
+		platform,
+		platform_collectible_single,
+		platform_collectible_multiple,
+		platform_collectible_rainbow
+	]
+	
+	var new_platform = available_platforms.pick_random().instantiate()
 	
 	# Set the position of the new platform
 	if last_platform_position == Vector2.ZERO:
@@ -41,3 +64,10 @@ func _spawn_new_platform():
 func _physics_process(delta):
 	# Move the platform left
 	moving_environment.position.x -= world_speed * delta
+
+func add_score(value):
+	score += value
+	collect_sound.set_pitch_scale(collectible_pitch)
+	collect_sound.play()
+	collectible_pitch += 0.1
+	reset_collectible_pitch_time = Time.get_ticks_msec() + collectible_pitch_reset_interval
