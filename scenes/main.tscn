@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2vl0ssyaocvf"]
+[gd_scene load_steps=9 format=3 uid="uid://c2vl0ssyaocvf"]
 
 [ext_resource type="Texture2D" uid="uid://dyom4em6nbp56" path="res://assets/sprites/Background/background_static.png" id="1_otpwb"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_ouxwr"]
 [ext_resource type="PackedScene" uid="uid://bjeindvxx7oxw" path="res://scenes/platform.tscn" id="2_1gtdi"]
 [ext_resource type="PackedScene" uid="uid://cop00gyepsxud" path="res://scenes/player.tscn" id="3_cswyl"]
+[ext_resource type="Script" path="res://scripts/PlayArea.gd" id="3_lbsal"]
 [ext_resource type="AudioStream" uid="uid://wglj3ixk4xtj" path="res://assets/sounds/collect.wav" id="6_f0w4j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2qfkp"]
+size = Vector2(1800, 1200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqcya"]
+size = Vector2(3000, 20)
 
 [node name="World" type="Node2D" groups=["example"]]
 script = ExtResource("1_ouxwr")
@@ -18,6 +25,20 @@ texture = ExtResource("1_otpwb")
 [node name="Environment" type="Node2D" parent="."]
 
 [node name="Static" type="Node2D" parent="Environment"]
+
+[node name="PlayArea" type="Area2D" parent="Environment/Static"]
+collision_mask = 4
+script = ExtResource("3_lbsal")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Static/PlayArea"]
+shape = SubResource("RectangleShape2D_2qfkp")
+
+[node name="Ground" type="Area2D" parent="Environment/Static"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Static/Ground"]
+position = Vector2(0, 700)
+shape = SubResource("RectangleShape2D_uqcya")
 
 [node name="Moving" type="Node2D" parent="Environment"]
 
@@ -58,3 +79,21 @@ theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 30
 text = "Scorfe 1000"
 horizontal_alignment = 2
+
+[node name="GameOver" type="Label" parent="HUD/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -26.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 30
+text = "Game Over. You scored %s points!
+Press \"jump\" to restart."
+horizontal_alignment = 1

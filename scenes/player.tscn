@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://cop00gyepsxud"]
+[gd_scene load_steps=51 format=3 uid="uid://cop00gyepsxud"]
 
 [ext_resource type="Texture2D" uid="uid://derg11aaybn46" path="res://assets/sprites/Player/player_death.png" id="1_m6wi8"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_xiwcn"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bsdunuxokrvlo" path="res://assets/sprites/Player/player_run.png" id="4_kfvcn"]
 [ext_resource type="Texture2D" uid="uid://cylkop244b26i" path="res://assets/sprites/Player/player_run_shoot.png" id="5_l6c0r"]
 [ext_resource type="AudioStream" uid="uid://c7yk1gwdcuddo" path="res://assets/sounds/jump.wav" id="7_0c1ev"]
+[ext_resource type="AudioStream" uid="uid://bsw45ec8r341n" path="res://assets/sounds/player_death.wav" id="8_4qhci"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f0ccb"]
 size = Vector2(100, 200)
@@ -330,7 +331,10 @@ shape = SubResource("RectangleShape2D_f0ccb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_86jpy")
 animation = &"run"
-frame_progress = 0.930109
+frame_progress = 0.77445
 
 [node name="jumpSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_0c1ev")
+
+[node name="deathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_4qhci")

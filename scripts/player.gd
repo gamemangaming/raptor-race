@@ -1,11 +1,15 @@
 extends CharacterBody2D
 
+signal player_died
+
 @export var gravity : int = 1600
 @export var jump_power : int = 600
 
 @onready var sprite = $AnimatedSprite2D
 @onready var jump_sound = $jumpSound
 @onready var camera = $"/root/World/Camera2D"
+@onready var death_sound = $deathSound
+@onready var collision_shape = $CollisionShape2D
 
 var active = true
 var jumps_remaining = 2
@@ -45,3 +49,10 @@ func _physics_process(delta):
 			jump_pitch += 0.2
 
 	move_and_slide()
+
+func die():
+	death_sound.play()
+	sprite.play("death")
+	active = false
+	collision_shape.set_deferred("disabled", true)
+	emit_signal("player_died")
